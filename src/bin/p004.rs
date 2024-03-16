@@ -9,28 +9,26 @@
     unused_results
 )]
 
-use integer::Integer;
-use num_integer::Integer as NumInteger;
+fn check_palindrome(num: u32) -> bool {
+    let mut n = num;
+    let mut rev = 0;
+    while n != 0 {
+        rev = rev * 10 + n % 10;
+        n /= 10;
+    }
+    rev == num
+}
 
 fn compute(min: u32, max: u32) -> u32 {
-    let r = min..(max + 1);
-    let it1 = r.clone().rev().map(|seed| seed.into_palindromic(10, true));
-    let it2 = r.rev().map(|seed| seed.into_palindromic(10, false));
-
-    for p in it1.chain(it2) {
-        for n in min..(max + 1) {
-            if n * n > p {
-                break;
-            }
-
-            let (d, r) = p.div_rem(&n);
-            if r == 0 && min <= d && d <= max {
-                return p;
+    let mut largest = 0;
+    for i in min..(max + 1) {
+        for k in min..(max + 1) {
+            if check_palindrome(i * k) && i * k > largest {
+                largest = i * k;
             }
         }
     }
-
-    unreachable!()
+    largest
 }
 
 fn solve() -> String {
