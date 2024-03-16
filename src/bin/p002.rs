@@ -9,30 +9,28 @@
     unused_results
 )]
 
-use num_integer::Integer;
+const PHI: f64 = 1.618033988749;
+const SQRT_5: f64 = 2.23606797749979;
 
-fn fib(n: u32) -> u32 {
-    if n <= 1 {
-        1
-    } else {
-        let ans = fib(n - 1) + fib(n - 2);
-        ans
-    }
+fn fib_closed(n: u32) -> u32 {
+    ((PHI.powf(n as f64) - (1.0_f64 - PHI).powf(n as f64)) / SQRT_5).round() as u32
 }
 
 fn compute(bound: u32) -> u32 {
     let mut count = 1;
     let mut sum = 0;
-    loop {
-        let num = fib(count);
-        if num > bound {
-            break sum;
-        }
-        if num % 2 == 0 {
-            sum += num;
+
+    let mut fib = 0;
+
+    while fib < bound {
+        fib = fib_closed(count);
+        if fib % 2 == 0 {
+            sum += fib;
         }
         count += 1;
     }
+
+    sum
 }
 
 fn solve() -> String {

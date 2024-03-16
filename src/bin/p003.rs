@@ -9,11 +9,11 @@
     unused_results
 )]
 
-use num_integer::sqrt;
+use integer::Integer;
 
 fn largest_prime_factor(num: u64, largest: &mut u64) {
     let mut is_prime = true;
-    for i in 2..sqrt(num) + 1 {
+    for i in 2..num.sqrt() + 1 {
         if num % i == 0 {
             largest_prime_factor(i, largest);
             largest_prime_factor(num / i, largest);
