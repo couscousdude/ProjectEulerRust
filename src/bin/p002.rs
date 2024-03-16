@@ -10,13 +10,29 @@
 )]
 
 use num_integer::Integer;
-use seq::Fibonacci;
+
+fn fib(n: u32) -> u32 {
+    if n <= 1 {
+        1
+    } else {
+        let ans = fib(n - 1) + fib(n - 2);
+        ans
+    }
+}
 
 fn compute(bound: u32) -> u32 {
-    Fibonacci::<u32>::new()
-        .take_while(|&f| f < bound)
-        .filter(|&f| f.is_even())
-        .sum()
+    let mut count = 1;
+    let mut sum = 0;
+    loop {
+        let num = fib(count);
+        if num > bound {
+            break sum;
+        }
+        if num % 2 == 0 {
+            sum += num;
+        }
+        count += 1;
+    }
 }
 
 fn solve() -> String {

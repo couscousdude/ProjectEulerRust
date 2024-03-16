@@ -10,7 +10,16 @@
 )]
 
 fn compute(bound: u32) -> u32 {
-    (1..bound).filter(|&n| n % 3 == 0 || n % 5 == 0).sum()
+    let mut result = 0;
+
+    for n in 1..bound {
+        if n % 3 == 0 && n % 5 != 0 {
+            result += n;
+        } else if n % 5 == 0 {
+            result += n;
+        }
+    }
+    result
 }
 
 fn solve() -> String {
